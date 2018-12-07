@@ -1,23 +1,30 @@
-# yolov3-network-slimming
-将[Learning Efficient Convolutional Networks Through Network Slimming (ICCV 2017)](http://openaccess.thecvf.com/content_iccv_2017/html/Liu_Learning_Efficient_Convolutional_ICCV_2017_paper.html)应用在yolov3和yolov2上<bar>
+# YOLOv3 Network Slimming
 
-# 环境
-pytorch 0.41 
+[Learning Efficient Convolutional Networks Through Network Slimming (ICCV 2017)](http://openaccess.thecvf.com/content_iccv_2017/html/Liu_Learning_Efficient_Convolutional_ICCV_2017_paper.html)
 
+[Rethinking The Smaller-Norm-Lessinformative](https://arxiv.org/abs/1802.00124?context=cs)
+
+## Require
+pytorch 0.41
 window 10
 
-# 如何使用
-1.对原始weights文件进行稀疏化训练
+## Fix cfg
+* Change `num=9` to `num=3` for each **yolo layer** .
+* `mask` must order by ascending.
+* `anchors` must include integer only.
+* set `random` as 1.
 
-python sparsity_train.py -sr --s 0.0001 --image_folder coco.data  --cfg yolov3.cfg --weights yolov3.weights 
-
-2.剪枝
-
-python prune.py --cfg yolov3.cfg --weights checkpoints/yolov3_sparsity_100.weights --percent 0.3
-
-3.对剪枝后的weights进行微调<bar>
-  
+## How to use
+1.Train with channel sparsity regularization.
+```bash
+python sparsity_train.py -sr --s 0.0001 --image_folder coco.data --cfg yolov3.cfg --weights yolov3.weights
+```
+2.Prune channels with small scaling factors.
+```bash
+python new_prune.py --cfg <>.cfg --weights checkpoints/yolov3_sparsity_100.weights --percent 0.3
+```
+3.Fine-tune the pruned network.
+```bash
 python sparsity_train.py --image_folder coco.data  --cfg prune_yolov3.cfg --weights prune_yolov3.weights 
+```
 
-# 关于new_prune.py
-new_prune更新了算法，现在可以确保不会有某一层被减为0的情况发生，参考[RETHINKING THE SMALLER-NORM-LESSINFORMATIVE](https://arxiv.org/abs/1802.00124?context=cs)对剪枝后bn层β系数进行了保留

@@ -104,7 +104,8 @@ class DetectionLayer(nn.Module):
 
             nProposals = int((pred_conf > 0.5).sum().item())
             recall = float(nCorrect / nGT) if nGT else 1
-            precision = float(nCorrect / nProposals)
+            precision=0
+            if nProposals!=0 :precision = float(nCorrect / nProposals)
 
             # Handle masks
             mask = Variable(mask.type(ByteTensor))
@@ -476,4 +477,3 @@ class Darknet(nn.Module):
                 else:
                     torch.nn.init.constant_(conv.bias.data,0.0)
                 torch.nn.init.xavier_uniform_(conv.weight.data, gain=1)
-
