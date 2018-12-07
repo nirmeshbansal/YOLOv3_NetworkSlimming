@@ -21,7 +21,7 @@ python sparsity_train.py -sr --s 0.0001 --image_folder coco.data --cfg yolov3.cf
 ```
 2.Prune channels with small scaling factors.
 ```bash
-python new_prune.py --cfg <>.cfg --weights checkpoints/yolov3_sparsity_100.weights --percent 0.3
+python new_prune.py --cfg yolov3.cfg --weights checkpoints/yolov3_sparsity_100.weights --percent 0.3
 ```
 3.Fine-tune the pruned network.
 ```bash
