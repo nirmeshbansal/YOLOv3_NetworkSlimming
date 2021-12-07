@@ -1,0 +1,7 @@
+classes=10
+train = /gdrive/MyDrive/datasets/VisDrone2019-DET-train/images.txt
+valid = /gdrive/MyDrive/datasets/VisDrone2019-DET-val/images.txt
+labels = /gdrive/MyDrive/datasets/config/visdrone/labels.txt
+names = /gdrive/MyDrive/datasets/config/visdrone/labels.txt
+backup = backup_drone/
+eval=coco
