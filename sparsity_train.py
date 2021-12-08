@@ -11,6 +11,8 @@ from torchvision import datasets
 from torchvision import transforms
 from torch.autograd import Variable
 from torch.optim import lr_scheduler
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def arg_parse():
